@@ -1,5 +1,12 @@
 #!/usr/bin/env python 
 
+'''
+Helper script to find HSV ranges of colors.
+Uses OpenCV
+
+Dagim Sisay
+'''
+
 import cv2
 import numpy as np
 import time
@@ -23,36 +30,35 @@ QUADS = {1 : [0, HEIGHT/2, 0, WIDTH/2],
 4 : [HEIGHT/2, HEIGHT, 0, WIDTH/2]}
 
 
-
 def hue_trackbar_handler(pos):
 	global hue_h
-	#print "Hue Position at %d" % pos
 	hue_h = pos
+	update_images()
 	
 def sat_trackbar_handler(pos):
 	global saturation_h
-	#print "Saturation Position at %d" % pos
 	saturation_h = pos
+	update_images()
 	
 def val_trackbar_handler(pos):
 	global value_h
-	#print "Value Position at %d" % pos
 	value_h = pos
+	update_images()
 
 def hue_trackbar_handler2(pos):
 	global hue_l
-	#print "Hue Position at %d" % pos
 	hue_l = pos
+	update_images()
 	
 def sat_trackbar_handler2(pos):
 	global saturation_l
-	#print "Saturation Position at %d" % pos
 	saturation_l = pos
+	update_images()
 	
 def val_trackbar_handler2(pos):
 	global value_l
-	#print "Value Position at %d" % pos
 	value_l = pos
+	update_images()
 		
 
 def create_empty_image(height, width, color, color_format='bgr'):
@@ -72,7 +78,24 @@ def color_a_quad(quad_no, color, color_format='bgr'):
 	for h in range(QUADS[quad_no][0], QUADS[quad_no][1]):
 		for w in range(QUADS[quad_no][2], QUADS[quad_no][3]):
 			img_color[h][w] = np.uint8(color)
-			
+
+
+def update_images():
+	print "Position Changes"
+	hsv_upper = np.array([hue_h, saturation_h, value_h], np.uint8)
+	hsv_lower = np.array([hue_l, saturation_l, value_l], np.uint8)
+	hsv_color_h = cv2.cvtColor(np.uint8([[[hue_h, saturation_h, value_h]]]), cv2.COLOR_HSV2BGR)
+	hsv_color_l = cv2.cvtColor(np.uint8([[[hue_l, saturation_l, value_l]]]), cv2.COLOR_HSV2BGR)
+	color_a_quad(1, hsv_color_h)
+	color_a_quad(3, hsv_color_l)
+	img_range = cv2.inRange(img_hsv, hsv_upper, hsv_lower)
+	bgr_val = str(hsv_color_h[0][0][0]) + ',' + str(hsv_color_h[0][0][1]) + ',' + str(hsv_color_h[0][0][2])
+	rgb_val = str(hsv_color_h[0][0][2]) + ',' + str(hsv_color_h[0][0][1]) + ',' + str(hsv_color_h[0][0][0])
+	cv2.putText(img_color, 'BGR: '+bgr_val, (350, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255))
+	cv2.putText(img_color, 'RGB: '+rgb_val, (350, 125), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255))
+	cv2.imshow('Colors', img_color)
+	cv2.imshow('Image', img_range)
+
 
 	
 if __name__ == "__main__":
@@ -88,23 +111,6 @@ if __name__ == "__main__":
 	img_bk = img_color.copy()
 	cv2.imshow('Colors', img_color)
 	img_f = cv2.imread(sys.argv[1])
-	while(1):
-		hsv_upper = np.array([hue_h, saturation_h, value_h], np.uint8)
-		hsv_lower = np.array([hue_l, saturation_l, value_l], np.uint8)
-		print hsv_upper
-		hsv_color_h = cv2.cvtColor(np.uint8([[[hue_h, saturation_h, value_h]]]), cv2.COLOR_HSV2BGR)
-		hsv_color_l = cv2.cvtColor(np.uint8([[[hue_l, saturation_l, value_l]]]), cv2.COLOR_HSV2BGR)
-		img_color = img_bk.copy()
-		color_a_quad(1, hsv_color_h)
-		color_a_quad(3, hsv_color_l)
-		img_hsv = cv2.cvtColor(img_f, cv2.COLOR_BGR2HSV)
-		img_bin = cv2.inRange(img_hsv, hsv_upper, hsv_lower)
-		bgr_val = str(hsv_color_h[0][0][0]) + ',' + str(hsv_color_h[0][0][1]) + ',' + str(hsv_color_h[0][0][2])
-		rgb_val = str(hsv_color_h[0][0][2]) + ',' + str(hsv_color_h[0][0][1]) + ',' + str(hsv_color_h[0][0][0])
-		cv2.putText(img_color, 'BGR: '+bgr_val, (350, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255))
-		cv2.putText(img_color, 'RGB: '+rgb_val, (350, 125), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255))
-		cv2.imshow('Colors', img_color)
-		cv2.imshow('image', img_bin)
-		cv2.waitKey(20)
-		#time.sleep(0.01)
-	
+	img_hsv = cv2.cvtColor(img_f, cv2.COLOR_BGR2HSV)
+	update_images()
+	cv2.waitKey(0)
