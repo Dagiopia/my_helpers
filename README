@@ -1,0 +1,21 @@
+This simple python ecript takes in as argument an image file
+and then will show up three windows.
+    - One window with trackbars to adjust upper and lower hsv values
+    - Second window to show the range of upper and lower values on a 2x2 grid
+      where the upper corner is for the upper hsv value and the lower right corner
+      is for the lower hsv value.
+    - Third window shows the input image file with the range of selected hsv values
+
+I use it to find hsv ranges of colors.
+
+All I need to do is take a picture of the region I want to extract and play with
+the trackbars till the right values are obtained.
+To minimize time of playing around with random values it's best to set the saturation
+and value at their maximum and find the color in question just by varying the hue
+after which saturatin and value can be taken into account to find the exact range.
+
+A screen shot is attached with the script in action.
+
+
+Dagim Sisay
+February, 2017
