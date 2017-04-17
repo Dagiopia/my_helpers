@@ -48,8 +48,14 @@ def find_deps(lib_path):
 deps = {}
 libs = []
 l_deps = []
-LIBNAME = sys.argv[1]
+LIBNAME = ''
+if len(sys.argv) == 3:
+	LIBNAME = name_o_path(sys.argv[1])
+else:
+	LIBNAME = sys.argv[1]
 l_path = search_file(LIBNAME)
+if l_path is None:
+	exit()
 deps[LIBNAME] = find_deps(l_path)
 libs.append(LIBNAME)
 l_deps.append(find_deps(l_path))
