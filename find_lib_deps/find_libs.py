@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 import sys
 import os 
+import numpy as np
 
-SEARCH_PATHS = ['/home/dagiopia/rasp_root/usr/lib/', '/home/dagiopia/opencog_rasp/']
+SEARCH_PATHS = ['PATH1', 'PATH2']
 
 name_o_path = lambda s : s[s.rfind('/')+1:]
 
@@ -44,23 +46,50 @@ def find_deps(lib_path):
 
 
 deps = {}
+libs = []
+l_deps = []
 LIBNAME = 'libcogutil.so'
 l_path = search_file(LIBNAME)
 deps[LIBNAME] = find_deps(l_path)
+libs.append(LIBNAME)
+l_deps.append(find_deps(l_path))
 print deps
 lib = LIBNAME
 for dep in deps[lib]:
 	fpath = search_file(dep)
 	deps[name_o_path(fpath)] = find_deps(fpath)
+	libs.append(name_o_path(fpath))
+	l_deps.append(find_deps(fpath))
+
+ld_f = []
+for l in l_deps:
+	for m in l:
+		ld_f.append(m)
+for l in ld_f:
+	if libs.count(l) > 0:
+		continue
+	libs.append(l)
+	l_deps.append(find_deps(search_file(l)))
 
 print '\n*************DONE*************\n'
 print deps
 
+'''
 #place on a file
-f = open(LIBNAME+'_deps', 'w')
+f = open(LIBNAME+'_deps_2', 'w')
 for d in deps:
 	f.write(d+'\n')
 	for l in deps[d]:
 		f.write('\t'+l+'\n')
 f.close()
+'''
+
+#place on a file
+f = open(LIBNAME+'_deps', 'w')
+for i in range(len(libs)):
+        f.write(libs[i]+'\n')
+        for l in l_deps[i]:
+                f.write('\t'+l+'\n')
+f.close()
+
 
