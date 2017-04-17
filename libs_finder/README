@@ -1,0 +1,48 @@
+This simple python script is helpful in managing rpaths 
+when you do cross compiling for a large program that 
+produces many shared libs and executables. 
+
+When elf executables are ran on linux, they may use 
+shared libs at run-time. Even shared libs may require
+other shared libs to run. The shared libs may not be
+in memory when ur program is ran so they should be
+searched for. When the dynamic linker searches for
+the libs, it looks into the standard directories but
+it may not find ur libs because they are not in std
+folders. This is the use of rpaths, it tells the 
+dynamic linker where to search for the libs.
+
+
+When you do cross compiling, you may typically have
+a specific folder for storing the final programs
+including libs and executables. 
+During compilation, if there're instructions to 
+assign rpaths relative to the given root directory 
+(like cmake does) then your rpaths may point to 
+the wrong dirs when installed on the target machine. 
+
+For example a certain library may have the following 
+rpath after compilation.
+
+LIB=   /home/$USER/arm_cc_ws/usr/local/lib/libexample.so
+RPATH= /home/$USER/arm_cc_ws/usr/lib
+
+where /home/$USER/arm_cc_ws/ is your temporary fake root
+for installing compiled files. 
+Now, all you may want is for the rpath to be 
+/usr/lib instead of /home/$USER/arm_cc_ws/usr/lib
+
+That's all the script does. It removes the fake root path
+from rpaths. 
+
+You need to have chrpath installed for it to work.
+just do 
+	sudo apt-get install chrpath
+
+Variables
+
+SEARCH_PATH - where the libs with wrong rpaths are found
+FAKE_ROOT - path to the fake root
+
+
+novel-like README for a 20 line script ends here :)
