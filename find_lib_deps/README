@@ -1,0 +1,2 @@
+This simple script finds all libs a certain lib depends on
+including the libs those libs depend on... For now :)
