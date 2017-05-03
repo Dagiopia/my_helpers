@@ -113,4 +113,6 @@ if __name__ == "__main__":
 	img_f = cv2.imread(sys.argv[1])
 	img_hsv = cv2.cvtColor(img_f, cv2.COLOR_BGR2HSV)
 	update_images()
-	cv2.waitKey(0)
+	while 'q' != chr(cv2.waitKey(0) & 0xFF):
+		pass
+	
