@@ -81,7 +81,7 @@ def color_a_quad(quad_no, color, color_format='bgr'):
 
 
 def update_images():
-	print "Position Changes"
+	#print "Position Changes"
 	hsv_upper = np.array([hue_h, saturation_h, value_h], np.uint8)
 	hsv_lower = np.array([hue_l, saturation_l, value_l], np.uint8)
 	hsv_color_h = cv2.cvtColor(np.uint8([[[hue_h, saturation_h, value_h]]]), cv2.COLOR_HSV2BGR)
@@ -100,12 +100,12 @@ def update_images():
 	
 if __name__ == "__main__":
 	cv2.namedWindow('yo_hsv_bars')
-	cv2.createTrackbar('Hue Upper', 'yo_hsv_bars', 0, 179, hue_trackbar_handler)
-	cv2.createTrackbar('Saturation Upper', 'yo_hsv_bars', 0, 255, sat_trackbar_handler)
-	cv2.createTrackbar('Value Upper', 'yo_hsv_bars', 0, 255, val_trackbar_handler)
-	cv2.createTrackbar('Hue Lower', 'yo_hsv_bars', 0, 179, hue_trackbar_handler2)
-	cv2.createTrackbar('Saturation Lower', 'yo_hsv_bars', 0, 255, sat_trackbar_handler2)
-	cv2.createTrackbar('Value Lower', 'yo_hsv_bars', 0, 255, val_trackbar_handler2)
+	cv2.createTrackbar('Hue Lower', 'yo_hsv_bars', 0, 179, hue_trackbar_handler)
+	cv2.createTrackbar('Saturation Lower', 'yo_hsv_bars', 0, 255, sat_trackbar_handler)
+	cv2.createTrackbar('Value Lower', 'yo_hsv_bars', 0, 255, val_trackbar_handler)
+	cv2.createTrackbar('Hue Upper', 'yo_hsv_bars', 0, 179, hue_trackbar_handler2)
+	cv2.createTrackbar('Saturation Upper', 'yo_hsv_bars', 0, 255, sat_trackbar_handler2)
+	cv2.createTrackbar('Value Upper', 'yo_hsv_bars', 0, 255, val_trackbar_handler2)
 	create_empty_image(HEIGHT, WIDTH, [0, 0, 255])
 	np.shape(img_color)
 	img_bk = img_color.copy()
