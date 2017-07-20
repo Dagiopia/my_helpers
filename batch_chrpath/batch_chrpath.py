@@ -1,8 +1,8 @@
 #!/usr/bin/env python 
 import os, sys
 
-SEARCH_PATH = '/home/dagiopia/opencog_rasp/usr/local/'
-FAKE_ROOT = ['/home/dagiopia/opencog_rasp', '/home/dagiopia/rasp_root']
+SEARCH_PATH = '/home/icog2/RPI/opencog_rpi_toolchain/opencog_rasp/usr/local'
+FAKE_ROOT = ['/home/icog2/RPI/opencog_rpi_toolchain/opencog_rasp', '/home/icog2/RPI/opencog_rpi_toolchain/needed_libs']
 
 
 def mod_rpath():
