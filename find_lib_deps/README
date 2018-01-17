@@ -1,2 +1,8 @@
 This simple script finds all libs a certain lib depends on
 including the libs those libs depend on... For now :)
+
+#Run
+./find_libs.py libxxxx.so
+
+then it will list the dependancies of libxxxx.so and the 
+dependancies of the dependancies. 
