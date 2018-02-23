@@ -4,6 +4,13 @@
 # February, 2018
 
 SETNAME="metfo_ipwoch"
+
+# if ipset doesn't exist, create it
+ipset list $SETNAME
+if [ $? -ne 0 ] ; then
+    ipset create $SETNAME iphash
+fi
+
 declare -a ARR
 ARR=($( grep "Failed password for root" /var/log/auth.log | grep -Po '(?<=from ).*(?= port)' | uniq -c | sort -nr -k1 | sort -u -k2 | sort -nr -k1))
 #N=0
