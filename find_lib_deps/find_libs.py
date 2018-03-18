@@ -21,7 +21,6 @@ def search_file(fname):
 		elif len(res) == 1:
 			f_path = res[0]
 			print "One result found: ", f_path
-			return f_path
 		else:
 			print "Multiple found!"
 			for r in res:
@@ -30,7 +29,7 @@ def search_file(fname):
 				#print os.readlink(r)
 			print "Taking the first result."
 			f_path = res[0]
-			return f_path
+		return f_path
 
 def find_deps(lib_path):
 	l_deps = []
@@ -80,15 +79,6 @@ for l in ld_f:
 print '\n*************DONE*************\n'
 print deps
 
-'''
-#place on a file
-f = open(LIBNAME+'_deps_2', 'w')
-for d in deps:
-	f.write(d+'\n')
-	for l in deps[d]:
-		f.write('\t'+l+'\n')
-f.close()
-'''
 
 #place on a file
 f = open(LIBNAME+'_deps', 'w')
