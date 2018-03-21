@@ -3,7 +3,7 @@ import sys
 import os 
 import numpy as np
 
-SEARCH_PATHS = ['PATH1', 'PATH2']
+SEARCH_PATHS = ['/usr/lib', '/usr/libaarch64-linux-gnu', '/usr/local/lib', '/lib']
 
 name_o_path = lambda s : s[s.rfind('/')+1:]
 
@@ -29,7 +29,11 @@ def search_file(fname):
 				#print os.readlink(r)
 			print "Taking the first result."
 			f_path = res[0]
+<<<<<<< HEAD
 		return f_path
+=======
+	return f_path
+>>>>>>> dab479c7c98704765be113a513b1bb2364716f5f
 
 def find_deps(lib_path):
 	l_deps = []

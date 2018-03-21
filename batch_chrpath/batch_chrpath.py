@@ -1,8 +1,8 @@
 #!/usr/bin/env python 
 import os, sys
 
-SEARCH_PATH = '/home/dagiopia/opencog_rasp/usr/local/'
-FAKE_ROOT = ['/home/dagiopia/opencog_rasp', '/home/dagiopia/rasp_root']
+SEARCH_PATH = sys.argv[1]
+FAKE_ROOT = [sys.argv[2], sys.argv[3]]
 
 
 def mod_rpath():
