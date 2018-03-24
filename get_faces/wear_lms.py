@@ -31,7 +31,7 @@ os.mkdir(new_dir)
 for l in cf:
     f_name = dir_name+'/'+l[0]+'.'+f_ext
     img = cv2.imread(f_name)
-    for p in range(1, len(l)-1):
-        img = cv2.circle(img, (int(l[p]), int(l[p+1])), 2, (0, 255, 0), 1)
+    for p in range(1, len(l)-1, 2):
+        img = cv2.circle(img, (int(l[p]), int(l[p+1])), 1, (0, 255, 0), 1)
     cv2.imshow('fdaf.jpg', img)
     cv2.waitKey(0)

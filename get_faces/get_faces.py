@@ -70,7 +70,7 @@ while True:
 	if cv2.absdiff(first_face, cimg).mean() > 15:
 		cv2.imwrite(dir_name+"/"+coll_name+str(face_count)+"."+save_ext, cimg)
 		first_face = cimg
-		cimg = cv2.cvtColor(cimg, cv2.COLOR_BGR2GRAY)
+		cimg = cv2.cvtColor(cimg, cv2.COLOR_BGR2RGB)
 		if get_lms:
 		    drect = dlib.rectangle(0, 0, np.long(w), np.long(h))
 		    shape = pred(cimg, drect)
