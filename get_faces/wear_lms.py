@@ -22,8 +22,6 @@ f_ext = 'jpg'
 if len(sys.argv) == 4:
     f_ext = sys.argv[3].replace('.', '')
 
-#imgs = glob.glob(dir_name+'/*.'+f_ext)
-
 cf = csv.reader(open(csv_file, 'r'))
 new_dir = dir_name+'_lms'
 os.mkdir(new_dir)
