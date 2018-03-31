@@ -5,9 +5,10 @@
   cmd params:
   	get_faces.py video_file collection_name [extension] [l]
   landmarks will be in a single csv file with the follwing format
-        face_file_name, x, y, x, y, x, y...
-  where the first x,y pair are the 0th point and the second the 1st and so on...
-  the landmarks are using the file shape_predictor_face_landmarks.dat model from dlib
+        face_file_abspath, w, h, x, y, x, y, x, y...
+  where the first w,h pair is the width and height of the image and the following 
+  x,y pairs are the 0th , the 1st, the 2nd....  shape points.
+  the landmarks are using the file shape_predictor_68_face_landmarks.dat model from dlib
   didn't upload the shape predictor model cuz it's too big
   it can be found here: http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
 """
