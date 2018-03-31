@@ -70,13 +70,14 @@ while True:
     	cimg = img[y:y+h+int(h*0.1), x:x+w+int(w*0.1)]
 	first_face, cimg = equalize(first_face, cimg)
 	if cv2.absdiff(first_face, cimg).mean() > 15:
-		cv2.imwrite(dir_name+"/"+coll_name+str(face_count)+"."+save_ext, cimg)
+		save_file_path = os.getcwd() + '/' + dir_name+"/"+coll_name+str(face_count)+"."+save_ext
+		cv2.imwrite(save_file_path, cimg)
 		first_face = cimg
 		cimg = cv2.cvtColor(cimg, cv2.COLOR_BGR2RGB)
 		if get_lms:
 		    drect = dlib.rectangle(0, 0, np.long(w), np.long(h))
 		    shape = pred(cimg, drect)
-		    l = [coll_name+str(face_count)]
+		    l = [save_file_path]
 		    for i in shape.parts():
 		    	l.append(i.x)
 			l.append(i.y)
