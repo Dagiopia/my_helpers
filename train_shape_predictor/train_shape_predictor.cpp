@@ -31,6 +31,8 @@ int main(int argc, char** argv)
             cout << "\t--tsd testing_dataset \t:\t XML testing dataset" << endl;
             cout << "\t[-o output_name] \t:\t Output model name (optional)" << endl;
             cout << "\t[--osamp oversampling] \t:\t Set Oversampling (optional)" << endl;
+            cout << "\t[--cdepth cascade_depth] \t:\t Set Cascade Depth (Strong Regressors) (optional)" << endl;
+            cout << "\t[--tpc trees_per_cascade] \t:\t Set Trees per Cascade (Weak Regressors) (optional)" << endl;
             cout << "\t[--nu regularization] \t:\t Set Regularization (nu) (optional)" << endl;
             cout << "\t[--tdepth tree_depth] \t:\t Set Tree Depth (optional)" << endl;
             cout << endl;
@@ -41,8 +43,9 @@ int main(int argc, char** argv)
 	string trd, tsd, o_file = "sp.dat";
 
 	//prams set to default form the example 
-	unsigned long oversampling = 300, tree_depth = 2;
-	double nu = 0.05;
+	unsigned long oversampling = 20, tree_depth = 5, sregressors = 10,
+	              wregressors = 500;
+	double nu = 0.1;
 
 
 	for ( int i = 1; i < argc; i+=2)
@@ -53,6 +56,10 @@ int main(int argc, char** argv)
 	        tsd = string(argv[i+1]);
 	    else if (0 == strcmp("-o", argv[i]))
 	        o_file = string(argv[i+1]);
+	    else if (0 == strcmp("--cdepth", argv[i]))
+	        sregressors = strtoul(argv[i+1], NULL, 10);
+	    else if (0 == strcmp("--tpc", argv[i]))
+	        wregressors = strtoul(argv[i+1], NULL, 10);
 	    else if (0 == strcmp("--osamp", argv[i]))
 	        oversampling = strtoul(argv[i+1], NULL, 10);
 	    else if (0 == strcmp("--nu", argv[i]))
@@ -71,9 +78,11 @@ int main(int argc, char** argv)
 
         // Now make the object responsible for training the model.  
         shape_predictor_trainer trainer;
-        trainer.set_oversampling_amount(300);
-        trainer.set_nu(0.05);
-        trainer.set_tree_depth(2);
+	trainer.set_cascade_depth(sregressors);
+	trainer.set_num_trees_per_cascade_level(wregressors);
+        trainer.set_oversampling_amount(oversampling);
+        trainer.set_nu(nu);
+        trainer.set_tree_depth(tree_depth);
 
 
         // Tell the trainer to print status messages to the console so we can
