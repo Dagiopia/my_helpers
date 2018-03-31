@@ -78,6 +78,8 @@ while True:
 		    drect = dlib.rectangle(0, 0, np.long(w), np.long(h))
 		    shape = pred(cimg, drect)
 		    l = [save_file_path]
+		    l.append(w)
+		    l.append(h)
 		    for i in shape.parts():
 		    	l.append(i.x)
 			l.append(i.y)
