@@ -38,7 +38,7 @@ int main(int argc, char** argv)
         }
 
 	//datasets
-	string trd, tsd, o_file;
+	string trd, tsd, o_file = "sp.dat";
 
 	//prams set to default form the example 
 	unsigned long oversampling = 300, tree_depth = 2;
