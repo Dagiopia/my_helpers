@@ -22,12 +22,6 @@ import dlib
 import csv
 
 
-def equalize(img, img2):
-    r1, c1, _ = np.shape(img)
-    r2, c2, _ = np.shape(img2)
-    return img[:min(r1, r2), :min(c1, c2)], img2[:min(r1, r2), :min(c1, c2)]
-
-
 
 if [3, 4, 5].count(len(sys.argv)) == 0: 
     exit()
@@ -66,25 +60,27 @@ while True:
     if not ret:
         break
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_detect.detectMultiScale(gray, 1.1, minSize=(55, 55))
+    faces = face_detect.detectMultiScale(gray, 1.1, minSize=(55, 55), 
+                                     flags=cv2.CASCADE_SCALE_IMAGE)
     for (x, y, w, h) in faces:
-    	cimg = img[y:y+h+int(h*0.1), x:x+w+int(w*0.1)]
-	first_face, cimg = equalize(first_face, cimg)
-	if cv2.absdiff(first_face, cimg).mean() > 15:
-		save_file_path = os.getcwd() + '/' + dir_name+"/"+coll_name+str(face_count)+"."+save_ext
-		cv2.imwrite(save_file_path, cimg)
-		first_face = cimg
-		cimg = cv2.cvtColor(cimg, cv2.COLOR_BGR2RGB)
-		if get_lms:
-		    drect = dlib.rectangle(0, 0, np.long(w), np.long(h))
-		    shape = pred(cimg, drect)
-		    l = [save_file_path]
-		    l.append(w)
-		    l.append(h)
-		    for i in shape.parts():
-		    	l.append(i.x)
-			l.append(i.y)
-		    lm_csv.writerow(l)
+        cimg = img[y:y+h+int(h*0.1), x:x+w+int(w*0.1)]
+        first_face = cv2.resize(first_face, (np.shape(cimg)[1], np.shape(cimg)[0]),
+                               cv2.INTER_LINEAR )
+        if cv2.absdiff(first_face, cimg).mean() > 15:
+            save_file_path = os.getcwd() + '/' + dir_name+"/"+coll_name+str(face_count)+"."+save_ext
+            cv2.imwrite(save_file_path, cimg)
+            first_face = cimg
+            cimg = cv2.cvtColor(cimg, cv2.COLOR_BGR2RGB)
+            if get_lms:
+                drect = dlib.rectangle(0, 0, np.long(w), np.long(h))
+                shape = pred(cimg, drect)
+                l = [save_file_path]
+                l.append(w)
+                l.append(h)
+                for i in shape.parts():
+                    l.append(i.x)
+                    l.append(i.y)
+                lm_csv.writerow(l)
 
-		face_count+=1
+            face_count+=1
 	
