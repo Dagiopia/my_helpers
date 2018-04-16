@@ -128,7 +128,7 @@ else:
     img_glob = glob.glob(image_src+'/*.'+file_ext)
     no_images = len(img_glob)
     if no_images > 0:
-        get_img = get_image_from_dir if no_fd else get_video_frame_fd
+        get_img = get_image_from_dir if no_fd else get_image_from_dir_fd
     else:
         print "No Images in Dir: ", 
 
