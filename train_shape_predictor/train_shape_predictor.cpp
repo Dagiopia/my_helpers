@@ -84,6 +84,7 @@ int main(int argc, char** argv)
         trainer.set_nu(nu);
         trainer.set_tree_depth(tree_depth);
 
+	trainer.set_num_threads(4);
 
         // Tell the trainer to print status messages to the console so we can
         // see how long the training will take.
